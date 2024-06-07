@@ -9,7 +9,7 @@ export const state = {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}/${id}`);
+    const data = await getJSON(`${API_URL}${id}`);
 
     const { recipe } = data.data;
     state.recipe = {
@@ -28,3 +28,17 @@ export const loadRecipe = async function (id) {
     throw err;
   }
 };
+//https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza
+//https://forkify-api.herokuapp.com/api/v2/recipes/
+export const loadSearchResults = async function (query) {
+  try {
+    const data = await getJSON(`${API_URL}?search=${query}`);
+    console.log(data);
+  } catch (err) {
+    // Temp error handling
+    console.error(`${err} 🤬🤬🤬🤬🤬`);
+    throw err;
+  }
+};
+
+loadSearchResults('pizza');
