@@ -7,8 +7,12 @@ class PaginationView extends View {
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--inline');
-      console.log(btn);
-      handler();
+
+      if (!btn) return;
+
+      const goToPage = +btn.dataset.goto;
+
+      handler(goToPage);
     });
   }
 
@@ -17,7 +21,6 @@ class PaginationView extends View {
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
-    console.log(numPages);
 
     // Page 1, and there are other pages
     if (curPage === 1 && numPages > 1) {
@@ -43,7 +46,7 @@ class PaginationView extends View {
   _generatePaginationButton(pageNum, dir) {
     if (dir === 'next')
       return `
-        <button class="btn--inline pagination__btn--next">
+        <button data-goto="${pageNum}" class="btn--inline pagination__btn--next">
             <span>Page ${pageNum}</span>
             <svg class="search__icon">
               <use href="${icons}#icon-arrow-right"></use>
@@ -52,7 +55,7 @@ class PaginationView extends View {
     `;
     else
       return `
-        <button class="btn--inline pagination__btn--prev">
+        <button data-goto="${pageNum}" class="btn--inline pagination__btn--prev">
             <svg class="search__icon">
               <use href="${icons}#icon-arrow-left"></use>
             </svg>
