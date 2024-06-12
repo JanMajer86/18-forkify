@@ -32,13 +32,11 @@ export default class View {
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        console.log('🙋', newEl.firstChild.nodeValue.trim());
         curEl.textContent = newEl.textContent;
       }
 
       // Updates changed ATTRIBUTES
       if (!newEl.isEqualNode(curEl)) {
-        console.log(Array.from(newEl.attributes));
         Array.from(newEl.attributes).forEach(attr =>
           curEl.setAttribute(attr.name, attr.value)
         );
